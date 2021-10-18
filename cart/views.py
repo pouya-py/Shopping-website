@@ -10,9 +10,8 @@ def cart_add(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     form = CartAddProductForm(request.POST)
     if form.is_valid():
-        form_cd = form.cleaned_data()
+        form_cd = form.cleaned_data
         cart.add(product, quantity=form_cd['quantity'], override_quantity=form_cd['override'])
-
     return redirect('cart:cart_detail')
 
 def cart_remove(request, product_id):
@@ -24,4 +23,6 @@ def cart_remove(request, product_id):
 
 def cart_detail(request):
     cart = Cart(request)
+    for item in cart:
+        item['update_quantity_form'] = CartAddProductForm(initial={'quantity':item['quantity'],'override':True})
     return render(request, 'cart/detail.html',{'cart':cart})

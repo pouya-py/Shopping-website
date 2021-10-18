@@ -28,21 +28,21 @@ class Cart(object):
         self.save()
     
     
+    def remove(self, product):
+        product_id = str(product.id)
+        if product_id in self.cart.keys():
+            del self.cart[product_id]
+            self.save()
+
     def save(self):
         # we set the session modified to True,as it will going to gets saved.
         self.session.modified = True
 
-    def remove(self, product):
-        
-        product_id = str(product.id)
-        if product_id in self.cart[product_id]:
-            del self.cart[product_id]
-            self.save()
 
 
     def __iter__(self):
         product_ids = self.cart.keys()
-        products = Product.objects.fiter(id__in = product_ids)
+        products = Product.objects.filter(id__in = product_ids)
         cart = self.cart.copy()
         for product in products:
             cart[str(product.id)]['product'] = product
@@ -58,7 +58,7 @@ class Cart(object):
     
     def get_total_price(self):
         # return sum of the prices of all items in cart
-        return sum(Decimal(item['price'] * item['quantity']) for item in self.cart.values())
+        return sum(Decimal(item['price']) * Decimal(item['quantity']) for item in self.cart.values())
 
     def clear(self):
         del self.session[settings.CART_SESSION_ID]
