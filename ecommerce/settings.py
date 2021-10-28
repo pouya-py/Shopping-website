@@ -25,9 +25,8 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
+    'payment.apps.PaymentConfig',
     'django_extensions',
-    
-
 ]
 
 MIDDLEWARE = [
@@ -121,3 +120,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 CART_SESSION_ID = 'cart'
+
+# Gateway API configuration
+BRAINTREE_MERCHANT_ID = 'n6vdmmx67qwm9jd4'
+BRAINTREE_PUBLIC_KEY = 'pf35h7tjkbh852bb' 
+BRAINTREE_PRIVATE_KEY = os.environ.get('BRAINTREE_PRIVATE_KEY')
+
+import braintree
+
+BRAIN_TREE_CONF = braintree.Configuration(
+    braintree.Environment.Sandbox,
+    BRAINTREE_MERCHANT_ID,
+    BRAINTREE_PUBLIC_KEY,
+    BRAINTREE_PRIVATE_KEY,    
+)
+
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587 
+# # EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+# # EMAIL_HOST_PASSWORD =os.environ.get('EMAIL_HOST_PASSWORD')
+# EMAIL_USE_TLS = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
