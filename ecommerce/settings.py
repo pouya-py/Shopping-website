@@ -1,6 +1,9 @@
 
 from pathlib import Path
 import os
+import environ
+env = environ.Env()
+environ.Env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -124,15 +127,16 @@ CART_SESSION_ID = 'cart'
 # Gateway API configuration
 BRAINTREE_MERCHANT_ID = 'n6vdmmx67qwm9jd4'
 BRAINTREE_PUBLIC_KEY = 'pf35h7tjkbh852bb' 
-BRAINTREE_PRIVATE_KEY = os.environ.get('BRAINTREE_PRIVATE_KEY')
+# BRAINTREE_PRIVATE_KEY = os.environ.get('BRAINTREE_PRIVATE_KEY')
+BRAINTREE_PRIVATE_KEY = env('BRAINTREE_PRIVATE_KEY')
 
 import braintree
 
-BRAIN_TREE_CONF = braintree.Configuration(
+BRAINTREE_CONF = braintree.Configuration(
     braintree.Environment.Sandbox,
     BRAINTREE_MERCHANT_ID,
     BRAINTREE_PUBLIC_KEY,
-    BRAINTREE_PRIVATE_KEY,    
+    BRAINTREE_PRIVATE_KEY
 )
 
 # EMAIL_HOST = 'smtp.gmail.com'

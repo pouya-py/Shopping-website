@@ -8,6 +8,7 @@ from . import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('cart/',include('cart.urls',namespace='cart')),
+    path('payment/',include('payment.urls',namespace='payment')),
     path('orders/',include('orders.urls',namespace='orders')),
     path('',include('shop.urls',namespace='shop')),
 ]
