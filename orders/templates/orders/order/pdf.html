@@ -33,9 +33,19 @@
                     </tr>
                     {% endfor %}
                 </tbody>
+                {% if order.coupon %}
+                <tr>
+                    <td>
+                        "{{ order.coupon.code }}" coupon
+                        ("{{ order.coupon.discount }}"% off)
+                    </td>
+                    <td colspan="2"></td>
+                    <td class="num neg">- ${{ order.get_discount_value|floatformat:2 }}</td>
+                </tr>
+                {% endif %}
                 <tr class="total">
                     <td colspan="3">Total</td>
-                    <td class="num">${{order.get_total_cost}}</td>
+                    <td class="num">${{ order.get_total_cost_with_discount }}</td>
                 </tr>
             </table>
             <span class="{% if order.paid %}paid{% else %}pending{% endif %}">
