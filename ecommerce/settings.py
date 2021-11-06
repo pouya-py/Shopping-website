@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
     'payment.apps.PaymentConfig',
     'django_extensions',
+    'coupons.apps.CouponsConfig',
 ]
 
 MIDDLEWARE = [
